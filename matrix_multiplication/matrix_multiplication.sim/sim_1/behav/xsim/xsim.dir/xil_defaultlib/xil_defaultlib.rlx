@@ -1,0 +1,7 @@
+0.6
+2017.4
+Jan 30 2018
+15:35:49
+/home/bodun/fpga_designs/ising_solver/matrix_multiplication/matrix_multiplication.sim/sim_1/behav/xsim/glbl.v,1513215259,verilog,,,,glbl,,,,,,,,
+/home/bodun/fpga_designs/ising_solver/matrix_multiplication/matrix_multiplication.srcs/sim_1/imports/matrix_multiplication/tb.v,1518418579,verilog,,,,tb,,,,,,,,
+/home/bodun/fpga_designs/ising_solver/matrix_multiplication/matrix_multiplication.srcs/sources_1/imports/matrix_multiplication/multiply.v,1518418684,verilog,,/home/bodun/fpga_designs/ising_solver/matrix_multiplication/matrix_multiplication.srcs/sim_1/imports/matrix_multiplication/tb.v,,Multiply,,,,,,,,
