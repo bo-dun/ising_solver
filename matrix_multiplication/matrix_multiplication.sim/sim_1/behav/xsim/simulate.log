@@ -1,0 +1,20 @@
+Vivado Simulator 2017.4
+Time resolution is 1 ps
+VAL for i =           0 and j =           0:   5
+Total:   5
+VAL for i =           0 and j =           0:  14
+Total:  19
+VAL for i =           0 and j =           1:   6
+Total:   6
+VAL for i =           0 and j =           1:  16
+Total:  22
+VAL for i =           1 and j =           0:  15
+Total:  15
+VAL for i =           1 and j =           0:  28
+Total:  43
+VAL for i =           1 and j =           1:  18
+Total:  18
+VAL for i =           1 and j =           1:  32
+Total:  50
+FINAL MATRIX=  19,  22,  43,  50
+13162b32
