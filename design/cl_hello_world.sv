@@ -13,40 +13,47 @@
 // implied. See the License for the specific language governing permissions and
 // limitations under the License.
 
-module Multiply(A,B,C);
+`define MAT_MAX 8191     // 8 * 32 * 32 - 1
+`define VEC_MAX 255  // 8 * 32 - 1
+`define DIMENSION 32
 
-    input [31:0] A;
-    input [31:0] B;
-    output [31:0] C;
+module Multiply(mat_in,vec_in,vec_out);
+
+    input [MAT_MAX:0] mat_in;
+    input [VEC_MAX:0] vec_in;
+    output [VEC_MAX:0] vec_out;
   
-    reg [31:0] C;
-    reg [7:0] A1 [0:1][0:1];
-    reg [7:0] B1 [0:1][0:1];
-    reg [7:0] Res [0:1][0:1]; 
+//    reg [7:0] mat1 [0:19][0:19];
+//    reg [7:0] vec_in1 [0:19];
+    reg [VEC_MAX:0] res; 
     integer i,j,k;
 
     always@ (A or B)
     begin
 
-        {A1[0][0],A1[0][1],A1[1][0],A1[1][1]} = A;
-        {B1[0][0],B1[0][1],B1[1][0],B1[1][1]} = B;
+//        {A1[0][0],A1[0][1],A1[1][0],A1[1][1]} = A;
+//        {B1[0][0],B1[0][1],B1[1][0],B1[1][1]} = B;
         i = 0;
         j = 0;
         k = 0;
-        {Res[0][0],Res[0][1],Res[1][0],Res[1][1]} = 32'd0; //initialize to zeros.
-
-        for(i=0;i < 2;i=i+1)
-            for(j=0;j < 2;j=j+1)begin
-                for(k=0;k < 2;k=k+1)begin
-                    Res[i][j] = Res[i][j] + (A1[i][k] * B1[k][j]);
-                    $display("VAL for i = %d and j = %d: %d", i, j, A1[i][k] * B1[k][j]);
-                    $display("Total: %d", Res[i][j]);
-                    end
+        //{Res[0][0],Res[0][1],Res[1][0],Res[1][1]} = 32'd0; //initialize to zeros.
+        res = VEC_MAX'd0;
+        for(i=0;i < DIMENSION;i=i+1)begin
+            for(j=0;j < DIMENSION;j=j+1)begin
+                for(k=0;k < DIMENSION;k=k+1)begin
+                    res[i*8 : (i)*8 + 7] = res[i*8 : (i)*8 + 7] + vec_in[j*8 : (j)*8 + 7] * mat_in[(VEC_MAX + 1)*i + j*8 : (VEC_MAX + 1)*i + j*8 + 7]
+                    //Res[i][j] = Res[i][j] + (A1[i][k] * B1[k][j]);
+                    //$display("VAL for i = %d and j = %d: %d", i, j, A1[i][k] * B1[k][j]);
+                    //$display("Total: %d", Res[i][j]);
+                end
             end
-        $display("FINAL MATRIX= %d, %d, %d, %d", Res[0][0], Res[0][1], Res[1][0], Res[1][1]);
-          
-        C = {Res[0][0],Res[0][1],Res[1][0],Res[1][1]};
-        $display("%h", C);            
+        end
+        //$display("FINAL MATRIX= %d, %d, %d, %d", Res[0][0], Res[0][1], Res[1][0], Res[1][1]);
+        $display("FINAL MATRIX: %h", res);
+        vec_out = res;
+      //{Res[0],Res[1],Res[2],Res[3],Res[4],Res[5],Res[6],Res[7],Res[8],Res[9],
+                  // Res[10],Res[11],Res[12],Res[13],Res[14],Res[15],Res[16],Res[17],Res[18],Res[19]};
+        $display("%h", vec_out); 
     end 
 
 endmodule
@@ -91,13 +98,13 @@ logic rst_main_n_sync;
 //-------------------------------------------------
   logic        arvalid_q;
   logic [31:0] araddr_q;
-  logic [31:0] hello_world_q_byte_swapped;
   logic [15:0] vled_q;
   logic [15:0] pre_cl_sh_status_vled;
   logic [15:0] sh_cl_status_vdip_q;
   logic [15:0] sh_cl_status_vdip_q2;
-  logic [31:0] hello_world_q;
-  logic [31:0] matrix_b;
+  logic [20*20*8 - 1:0] mat_in;
+  logic [20*8 - 1:0] vec_out;
+  logic [20*8 - 1:0] vec_in;
 
 //-------------------------------------------------
 // ID Values (cl_hello_world_defines.vh)
@@ -141,7 +148,7 @@ always_ff @(negedge rst_main_n or posedge clk_main_a0)
   logic        ocl_sh_bvalid_q;
   logic [ 1:0] ocl_sh_bresp_q;
   logic        sh_ocl_bready_q;
-                                                                                                                              
+                                                                                                                            
   // Read address                                                                                                              
   logic        sh_ocl_arvalid_q;
   logic [31:0] sh_ocl_araddr_q;
@@ -218,51 +225,13 @@ always_ff @(negedge rst_main_n or posedge clk_main_a0)
    logic [31:0] rdata;
    logic [1:0]  rresp;
 
-   logic on_b = 0;
-
-/*module Multiply(A,B,C);
-
-    input [31:0] A;
-    input [31:0] B;
-    output [31:0] C;
-  
-    reg [31:0] C;
-    reg [7:0] A1 [0:1][0:1];
-    reg [7:0] B1 [0:1][0:1];
-    reg [7:0] Res [0:1][0:1]; 
-    integer i,j,k;
-
-    always@ (A or B)
-    begin
-
-        {A1[0][0],A1[0][1],A1[1][0],A1[1][1]} = A;
-        {B1[0][0],B1[0][1],B1[1][0],B1[1][1]} = B;
-        i = 0;
-        j = 0;
-        k = 0;
-        {Res[0][0],Res[0][1],Res[1][0],Res[1][1]} = 32'd0; //initialize to zeros.
-
-        for(i=0;i < 2;i=i+1)
-            for(j=0;j < 2;j=j+1)begin
-                for(k=0;k < 2;k=k+1)begin
-                    Res[i][j] = Res[i][j] + (A1[i][k] * B1[k][j]);
-                    $display("VAL for i = %d and j = %d: %d", i, j, A1[i][k] * B1[k][j]);
-                    $display("Total: %d", Res[i][j]);
-                    end
-            end
-        $display("FINAL MATRIX= %d, %d, %d, %d", Res[0][0], Res[0][1], Res[1][0], Res[1][1]);
-          
-        C = {Res[0][0],Res[0][1],Res[1][0],Res[1][1]};
-        $display("%h", C);            
-    end 
-
-endmodule
-*/
+   logic [7:0] write_switch = 8'd0;
+   logic [7:0] read_switch = 8'd0;
 
    Multiply uut (
-        .A(hello_world_q), 
-        .B(matrix_b), 
-        .C(hello_world_q_byte_swapped)
+        .mat_in(mat_in), 
+        .vec_in(vec_in), 
+        .vec_out(vec_out)
    );
 
    // Inputs
@@ -335,22 +304,23 @@ always_ff @(posedge clk_main_a0)
       rvalid <= 0;
       rdata  <= 0;
       rresp  <= 0;
+      read_switch <= 0;
    end
    else if (rvalid && rready)
    begin
       rvalid <= 0;
       rdata  <= 0;
       rresp  <= 0;
+      read_switch <= read_switch;
    end
    else if (arvalid_q) 
    begin
-      $display("hello_world upon read: %h", hello_world_q);
-      $display("matrix_b upon read: %h", matrix_b);
+      $display("matrix_in upon read: %h", mat_in);
+      $display("vec_in upon read: %h", vec_in);
       rvalid <= 1;
-      rdata  <= (araddr_q == `HELLO_WORLD_REG_ADDR) ? hello_world_q_byte_swapped[31:0]:
-                (araddr_q == `VLED_REG_ADDR       ) ? {16'b0,vled_q[15:0]            }:
-                                                      `UNIMPLEMENTED_REG_VALUE        ;
       rresp  <= 0;
+      rdata  <= (araddr_q == `HELLO_WORLD_REG_ADDR) ? vec_out[(read_switch + 1) * 32 - 1:read_switch * 32]: `UNIMPLEMENTED_REG_VALUE;
+      read_switch = (read_switch + 1) % (DIMENSION * 8 / 32)
    end
 
 //-------------------------------------------------
@@ -360,65 +330,29 @@ always_ff @(posedge clk_main_a0)
 
 always_ff @(posedge clk_main_a0)
    if (!rst_main_n_sync) begin                    // Reset
-      hello_world_q[31:0] <= 32'h0000_0000;
-      matrix_b[31:0] <= 32'h0000_0000;
+      mat_in[MAT_MAX:0] <= MAT_MAX'h0;
+      vec_in[VEC_MAX:0] <= VEC_MAX'h0;
    end
    else if (wready & (wr_addr == `HELLO_WORLD_REG_ADDR)) begin  
-      if (on_b == 0) begin
-	 hello_world_q[31:0] <= wdata[31:0];
-      $display("hello_world written AT 0: %h", hello_world_q);
-$display("matrix_b upon write AT 0: %h", matrix_b);
-$display("WDATA: %h", wdata);
+      if (write_switch < (DIMENSION * DIMENSION * 8)/32) begin
+	      mat_in[(write_switch + 1) * 32 - 1 : write_switch * 32] <= wdata[31:0];
+        $display("mat_in written AT 0: %h", mat_in);
+        $display("vec_in upon write AT 0: %h", vec_in);
+        $display("WDATA: %h", wdata);
       end
       else begin
-	$display("hello_world upon write AT 1: %h", hello_world_q);
-      matrix_b[31:0] <= wdata[31:0];
-	$display("matrix_b upon write AT 1: %h", matrix_b);
-	$display("WDATA: %h", wdata);
+	      $display("mat_in upon write AT 1: %h", mat_in);
+        vec_in[(write_switch - (MAT_MAX + 1)/32 + 1) * 32 - 1 : (write_switch - (MAT_MAX + 1)/32) * 32] <= wdata[31:0];
+	      $display("vec_in upon write AT 1: %h", vec_in);
+	      $display("WDATA: %h", wdata);
       end
-      on_b = !on_b;
+      write_switch = (write_switch + 1) % ((DIMENSION * DIMENSION * 8 + DIMENSION * 8)/32);
    end
    else begin                                // Hold Value
-      hello_world_q[31:0] <= hello_world_q[31:0];
-      matrix_b[31:0] <= matrix_b[31:0];
-      on_b = on_b;
+      mat_in[MAT_MAX:0] <= mat_in[MAT_MAX:0];
+      vec_in[VEC_MAX:0] <= vec_in[VEC_MAX:0];
+      write_switch = write_switch;
    end
-
-//assign hello_world_q_byte_swapped[31:0] = {hello_world_q[7:0],   hello_world_q[15:8],
-//                                           hello_world_q[23:16], hello_world_q[31:24]};
-
-//-------------------------------------------------
-// Virtual LED Register
-//-------------------------------------------------
-// Flop/synchronize interface signals
-always_ff @(posedge clk_main_a0)
-   if (!rst_main_n_sync) begin                    // Reset
-      sh_cl_status_vdip_q[15:0]  <= 16'h0000;
-      sh_cl_status_vdip_q2[15:0] <= 16'h0000;
-      cl_sh_status_vled[15:0]    <= 16'h0000;
-   end
-   else begin
-      sh_cl_status_vdip_q[15:0]  <= sh_cl_status_vdip[15:0];
-      sh_cl_status_vdip_q2[15:0] <= sh_cl_status_vdip_q[15:0];
-      cl_sh_status_vled[15:0]    <= pre_cl_sh_status_vled[15:0];
-   end
-
-// The register contains 16 read-only bits corresponding to 16 LED's.
-// For this example, the virtual LED register shadows the hello_world
-// register.
-// The same LED values can be read from the CL to Shell interface
-// by using the linux FPGA tool: $ fpga-get-virtual-led -S 0
-
-always_ff @(posedge clk_main_a0)
-   if (!rst_main_n_sync) begin                    // Reset
-      vled_q[15:0] <= 16'h0000;
-   end
-   else begin
-      vled_q[15:0] <= hello_world_q[15:0];
-   end
-
-// The Virtual LED outputs will be masked with the Virtual DIP switches.
-assign pre_cl_sh_status_vled[15:0] = vled_q[15:0] & sh_cl_status_vdip_q2[15:0];
 
 //-------------------------------------------
 // Tie-Off Unused Global Signals
@@ -568,8 +502,3 @@ always_ff @(posedge clk_main_a0)
 `endif //  `ifndef DISABLE_VJTAG_DEBUG
 
 endmodule
-
-
-
-
-
