@@ -13,47 +13,46 @@
 // implied. See the License for the specific language governing permissions and
 // limitations under the License.
 
-`define MAT_MAX 8191     // 8 * 32 * 32 - 1
-`define VEC_MAX 255  // 8 * 32 - 1
-`define DIMENSION 32
+`define MAT_MAX 2047     // 8 * 32 * 32 - 1
+`define VEC_MAX 127  // 8 * 32 - 1
+`define DIMENSION 16
 
-module Multiply(mat_in,vec_in,vec_out);
+module Multiply(mat_in,vec_in,iterations,start_calc,vec_out);
 
-    input [MAT_MAX:0] mat_in;
-    input [VEC_MAX:0] vec_in;
-    output [VEC_MAX:0] vec_out;
+    input [`MAT_MAX:0] mat_in;
+    input [`VEC_MAX:0] vec_in;
+    input [31:0] iterations;
+    input start_calc;
+    output [`VEC_MAX:0] vec_out;
   
 //    reg [7:0] mat1 [0:19][0:19];
 //    reg [7:0] vec_in1 [0:19];
-    reg [VEC_MAX:0] res; 
+    reg [`VEC_MAX:0] vec_in; 
+    reg [`VEC_MAX:0] vec_out; 
     integer i,j,k;
 
-    always@ (A or B)
+    always_ff @ (posedge start_calc)
     begin
 
 //        {A1[0][0],A1[0][1],A1[1][0],A1[1][1]} = A;
 //        {B1[0][0],B1[0][1],B1[1][0],B1[1][1]} = B;
-        i = 0;
+//        iterations = 2;
+	i = 0;
         j = 0;
         k = 0;
-        //{Res[0][0],Res[0][1],Res[1][0],Res[1][1]} = 32'd0; //initialize to zeros.
-        res = VEC_MAX'd0;
-        for(i=0;i < DIMENSION;i=i+1)begin
-            for(j=0;j < DIMENSION;j=j+1)begin
-                for(k=0;k < DIMENSION;k=k+1)begin
-                    res[i*8 : (i)*8 + 7] = res[i*8 : (i)*8 + 7] + vec_in[j*8 : (j)*8 + 7] * mat_in[(VEC_MAX + 1)*i + j*8 : (VEC_MAX + 1)*i + j*8 + 7]
-                    //Res[i][j] = Res[i][j] + (A1[i][k] * B1[k][j]);
-                    //$display("VAL for i = %d and j = %d: %d", i, j, A1[i][k] * B1[k][j]);
-                    //$display("Total: %d", Res[i][j]);
+        $display("MODULE MATRIX: %h", mat_in);
+	$display("MODULE VECTOR: %h", vec_in);
+	for(i = 0; i < iterations; i = i + 1) begin
+       	    vec_out = 0;
+            for(j=0;j < `DIMENSION;j=j+1) begin
+                for(k=0;k < `DIMENSION;k=k+1) begin
+		    vec_out[j*8 +: 8] = vec_out[j*8 +: 8] + vec_in[k*8 +: 8] * mat_in[(`VEC_MAX + 1)*j + k*8 +: 8];
                 end
             end
-        end
-        //$display("FINAL MATRIX= %d, %d, %d, %d", Res[0][0], Res[0][1], Res[1][0], Res[1][1]);
-        $display("FINAL MATRIX: %h", res);
-        vec_out = res;
-      //{Res[0],Res[1],Res[2],Res[3],Res[4],Res[5],Res[6],Res[7],Res[8],Res[9],
-                  // Res[10],Res[11],Res[12],Res[13],Res[14],Res[15],Res[16],Res[17],Res[18],Res[19]};
-        $display("%h", vec_out); 
+	    $display("Intermediate vector: %h", vec_out);
+	    vec_in[`VEC_MAX:0] = vec_out[`VEC_MAX:0];
+	end
+        $display("FINAL VECTOR: %h", vec_out);
     end 
 
 endmodule
@@ -102,9 +101,11 @@ logic rst_main_n_sync;
   logic [15:0] pre_cl_sh_status_vled;
   logic [15:0] sh_cl_status_vdip_q;
   logic [15:0] sh_cl_status_vdip_q2;
-  logic [20*20*8 - 1:0] mat_in;
-  logic [20*8 - 1:0] vec_out;
-  logic [20*8 - 1:0] vec_in;
+  logic [`MAT_MAX:0] mat_in;
+  logic [`VEC_MAX:0] vec_out;
+  logic [`VEC_MAX:0] vec_in;
+  logic [31:0] iterations;
+  logic start_calc = 0;
 
 //-------------------------------------------------
 // ID Values (cl_hello_world_defines.vh)
@@ -225,13 +226,15 @@ always_ff @(negedge rst_main_n or posedge clk_main_a0)
    logic [31:0] rdata;
    logic [1:0]  rresp;
 
-   logic [7:0] write_switch = 8'd0;
+   logic [9:0] write_switch = 10'd0;
    logic [7:0] read_switch = 8'd0;
 
    Multiply uut (
         .mat_in(mat_in), 
         .vec_in(vec_in), 
-        .vec_out(vec_out)
+        .vec_out(vec_out),
+	.iterations(iterations),
+	.start_calc(start_calc)
    );
 
    // Inputs
@@ -315,12 +318,12 @@ always_ff @(posedge clk_main_a0)
    end
    else if (arvalid_q) 
    begin
-      $display("matrix_in upon read: %h", mat_in);
-      $display("vec_in upon read: %h", vec_in);
+//      $display("matrix_in upon read: %h", mat_in);
+//      $display("vec_in upon read: %h", vec_in);
       rvalid <= 1;
       rresp  <= 0;
-      rdata  <= (araddr_q == `HELLO_WORLD_REG_ADDR) ? vec_out[(read_switch + 1) * 32 - 1:read_switch * 32]: `UNIMPLEMENTED_REG_VALUE;
-      read_switch = (read_switch + 1) % (DIMENSION * 8 / 32)
+      rdata  <= (araddr_q == `HELLO_WORLD_REG_ADDR) ? vec_out[read_switch * 32 +: 32]: `UNIMPLEMENTED_REG_VALUE;
+      read_switch = (read_switch + 1) % (`DIMENSION * 8 / 32);
    end
 
 //-------------------------------------------------
@@ -330,28 +333,41 @@ always_ff @(posedge clk_main_a0)
 
 always_ff @(posedge clk_main_a0)
    if (!rst_main_n_sync) begin                    // Reset
-      mat_in[MAT_MAX:0] <= MAT_MAX'h0;
-      vec_in[VEC_MAX:0] <= VEC_MAX'h0;
+      mat_in[`MAT_MAX:0] <= `MAT_MAX'h0;
+      vec_in[`VEC_MAX:0] <= `VEC_MAX'h0;
+      start_calc <= 0;
    end
    else if (wready & (wr_addr == `HELLO_WORLD_REG_ADDR)) begin  
-      if (write_switch < (DIMENSION * DIMENSION * 8)/32) begin
-	      mat_in[(write_switch + 1) * 32 - 1 : write_switch * 32] <= wdata[31:0];
+      if (write_switch < (`DIMENSION * `DIMENSION * 8)/32) begin
+	mat_in[write_switch * 32 +: 32] <= wdata[31:0];
+	write_switch = write_switch + 1;
         $display("mat_in written AT 0: %h", mat_in);
         $display("vec_in upon write AT 0: %h", vec_in);
-        $display("WDATA: %h", wdata);
       end
-      else begin
+      else if (write_switch < (`DIMENSION * `DIMENSION * 8 + `DIMENSION * 8)/32) begin
 	      $display("mat_in upon write AT 1: %h", mat_in);
-        vec_in[(write_switch - (MAT_MAX + 1)/32 + 1) * 32 - 1 : (write_switch - (MAT_MAX + 1)/32) * 32] <= wdata[31:0];
+        vec_in[(write_switch - (`MAT_MAX + 1)/32) * 32 +: 32] <= wdata[31:0];
+	write_switch = write_switch + 1;
 	      $display("vec_in upon write AT 1: %h", vec_in);
 	      $display("WDATA: %h", wdata);
       end
-      write_switch = (write_switch + 1) % ((DIMENSION * DIMENSION * 8 + DIMENSION * 8)/32);
-   end
+      else begin
+        iterations[31:0] = wdata[31:0];
+	start_calc = 1;
+	write_switch = 0;
+      end
+      $display("write switch: %d", write_switch);
+//      write_switch = (write_switch + 1) % ((`DIMENSION * `DIMENSION * 8 + `DIMENSION * 8)/32);
+//      if (write_switch == 0) begin
+//      	start_calc <= 1;
+//      end
+   end	
    else begin                                // Hold Value
-      mat_in[MAT_MAX:0] <= mat_in[MAT_MAX:0];
-      vec_in[VEC_MAX:0] <= vec_in[VEC_MAX:0];
-      write_switch = write_switch;
+      mat_in[`MAT_MAX:0] <= mat_in[`MAT_MAX:0];
+      vec_in[`VEC_MAX:0] <= vec_in[`VEC_MAX:0];
+      write_switch <= write_switch;
+      iterations <= iterations;
+      start_calc <= start_calc;
    end
 
 //-------------------------------------------
