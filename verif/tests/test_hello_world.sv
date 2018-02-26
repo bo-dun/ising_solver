@@ -13,9 +13,9 @@
 // implied. See the License for the specific language governing permissions and
 // limitations under the License.
 
-`define MAT_MAX 8191     // 8 * 32 * 32 - 1
-`define VEC_MAX 255  // 8 * 32 - 1
-`define DIMENSION 32
+`define MAT_MAX 2047     // 8 * 32 * 32 - 1
+`define VEC_MAX 127  // 8 * 32 - 1
+`define DIMENSION 16
 
 module test_hello_world();
 
@@ -41,33 +41,20 @@ logic [15:0] vled_value;
     //  $display ("value of vdip:%0x", vdip_value);
 
     //  $display ("Writing 0xDEAD_BEEF to address 0x%x", `HELLO_WORLD_REG_ADDR);
-      for (int i = 0; i < DIMENSION * DIMENSION * 8 / 32; i=i+1)begin
+      for (int i = 0; i < `DIMENSION * `DIMENSION * 8 / 32; i=i+1)begin
+          tb.poke(.addr(`HELLO_WORLD_REG_ADDR), .data(32'h00000001), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); // write register
+      end
+      for (int j = 0; j < `DIMENSION * 8 / 32; j = j+1)begin
           tb.poke(.addr(`HELLO_WORLD_REG_ADDR), .data(32'h02020202), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); // write register
       end
-      for (int j = 0; j < DIMENSION * 8 / 32; j = j+1)begin
-          tb.poke(.addr(`HELLO_WORLD_REG_ADDR), .data(32'h01010101), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); // write register
-      end
-      for (int k = 0; k < DIMENSION * 8 / 32; k = k+1)begin
+      tb.poke(.addr(`HELLO_WORLD_REG_ADDR), .data(32'h00000003), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL)); 
+
+      #3;
+
+      for (int k = 0; k < `DIMENSION * 8 / 32; k = k+1)begin
           tb.peek(.addr(`HELLO_WORLD_REG_ADDR), .data(rdata), .id(AXI_ID), .size(DataSize::UINT16), .intf(AxiPort::PORT_OCL));         // start read & write
           $display ("Reading 0x%x from address 0x%x", rdata, `HELLO_WORLD_REG_ADDR);
       end
-
-   //   if (rdata == 32'hEFBE_ADDE) // Check for byte swap in register read
-   //     $display ("TEST PASSED");
-   //   else
-        $display ("TEST FAILED");
-
-    //  tb.peek_ocl(.addr(`VLED_REG_ADDR), .data(rdata));         // start read
-    //  $display ("Reading 0x%x from address 0x%x", rdata, `VLED_REG_ADDR);
-
-    //  if (rdata == 32'h0000_BEEF) // Check for LED register read
-    //    $display ("TEST PASSED");
-    //  else
-    //    $display ("TEST FAILED");
-
-    //  vled_value = tb.get_virtual_led();
-
-    //  $display ("value of vled:%0x", vled_value);
 
       tb.kernel_reset();
 
