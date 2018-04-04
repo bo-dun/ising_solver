@@ -1,0 +1,4 @@
+Multi-threading is on. Using 14 slave threads.
+Running compilation flow
+Done compilation
+Done linking: "/home/centos/src/project_data/aws-fpga/hdk/cl/examples/cl_uram_example/verif/sim/vivado/test_null/xsim.dir/xsc/dpi.so"

@@ -13,8 +13,8 @@
 // implied. See the License for the specific language governing permissions and
 // limitations under the License.
 
-`define MAT_MAX 2047     // 8 * 32 * 32 - 1
-`define VEC_MAX 127  // 8 * 32 - 1
+`define MAT_MAX 2047     // 8 * 16 * 16 - 1
+`define VEC_MAX 127  // 8 * 16 - 1
 `define DIMENSION 16
 
 module Multiply(mat_in,vec_in,iterations,start_calc,vec_out);

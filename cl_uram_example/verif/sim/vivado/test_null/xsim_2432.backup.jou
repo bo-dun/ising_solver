@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# xsim v2017.1_sdx_AR70350 (64-bit)
+# SW Build 1933108 on Fri Jul 14 11:54:19 MDT 2017
+# IP Build 1908669 on Fri Jul 14 13:31:24 MDT 2017
+# Start of session at: Mon Feb 19 05:25:09 2018
+# Process ID: 2432
+# Current directory: /home/centos/src/project_data/aws-fpga/hdk/cl/examples/cl_hello_world/verif/sim/vivado/test_null
+# Command line: xsim -log test_null.log -mode tcl -source {xsim.dir/tb/xsim_script.tcl}
+# Log file: /home/centos/src/project_data/aws-fpga/hdk/cl/examples/cl_hello_world/verif/sim/vivado/test_null/test_null.log
+# Journal file: /home/centos/src/project_data/aws-fpga/hdk/cl/examples/cl_hello_world/verif/sim/vivado/test_null/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/tb/xsim_script.tcl
+source /home/centos/src/project_data/aws-fpga/hdk/cl/examples/cl_hello_world/verif/scripts/waves.tcl
