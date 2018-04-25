@@ -1,0 +1,3 @@
+set xmlPath "/home/centos/src/project_data/aws-fpga/SDAccel/examples/xilinx/getting_started/host/helloworld_ocl/_xocc_compile_vector_addition_vector_addition.sw_emu.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.dir/impl/kernels/vector_add/vector_add/kernel.xml"
+transform "/home/centos/src/project_data/aws-fpga/SDAccel/examples/xilinx/getting_started/host/helloworld_ocl/_xocc_compile_vector_addition_vector_addition.sw_emu.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.dir/impl/kernels/vector_add/vector_add/vector_add.clc.00.bc" -hls -top=vector_add -xcl-xmlinfo=$xmlPath -xcl-flatten -spir-runtime-support -xcl-ports-metadata -spir-link-builtins -kernelxml -f -o /dev/null
+exit
