@@ -1,0 +1,139 @@
+INFO: [SDx-EM 01] Hardware emulation runs detailed simulation underneath. It may take long time for large data set. Please use a small dataset for faster execution. You can still get performance trend for your kernel with smaller dataset.
+INFO: [SDx-EM 22] [Wall clock time: 01:34, Emulation time: 3.45558 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 3364.438 KB            WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 01:39, Emulation time: 6.92351 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 6751.062 KB            WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 01:44, Emulation time: 10.3746 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 10121.312 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 01:49, Emulation time: 13.8415 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 13506.875 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 01:55, Emulation time: 17.2797 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 16864.500 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:00, Emulation time: 20.7616 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 20264.875 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:05, Emulation time: 24.2459 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 23667.500 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:10, Emulation time: 27.7293 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 27069.188 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:15, Emulation time: 31.1241 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 30384.500 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:20, Emulation time: 34.5931 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 33772.188 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:26, Emulation time: 38.0663 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 37163.938 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:31, Emulation time: 41.5396 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 40555.875 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:36, Emulation time: 45.0129 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 43947.750 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:41, Emulation time: 48.487 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 47340.438 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:46, Emulation time: 51.9701 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 50741.875 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:51, Emulation time: 55.4525 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 54142.625 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 02:57, Emulation time: 58.7688 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 57381.250 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 03:02, Emulation time: 62.2325 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 60763.750 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 03:07, Emulation time: 65.6985 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 64148.562 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 03:12, Emulation time: 69.1665 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 67535.188 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 03:17, Emulation time: 72.6385 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 70925.875 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 03:22, Emulation time: 76.1106 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 74316.562 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
+INFO: [SDx-EM 22] [Wall clock time: 03:28, Emulation time: 79.5829 ms] Data transfer between kernel(s) and global memory(s)
+BANK0          RD = 77707.500 KB           WR = 0.031 KB        
+BANK1          RD = 0.000 KB               WR = 0.000 KB        
+BANK2          RD = 0.000 KB               WR = 0.000 KB        
+BANK3          RD = 0.000 KB               WR = 0.000 KB        
+
