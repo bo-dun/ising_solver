@@ -32,7 +32,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // parameters with the global keyword represents cl_mem objects on the FPGA
 // DDR memory.
 //
-#define BUFFER_SIZE 256
+
+#define BUFFER_SIZE 100
 kernel __attribute__((reqd_work_group_size(1, 1, 1)))
 void vector_add(global int* c,
                 global const int* a,

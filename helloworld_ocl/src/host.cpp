@@ -31,7 +31,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using std::vector;
 
-static const int DIMENSION = 10;
+static const int DIMENSION = 100;
 static const int ITERATIONS = 2;
 static const std::string error_message =
     "Error: Result mismatch:\n"
@@ -122,7 +122,7 @@ int main(int argc, char **argv) {
 //            break;
 //        } else {
           printf("%d ", source_out_vec[i]);
-          if (((i + 1) % 16) == 0) printf("\n");
+          if (((i + 1) % 10) == 0) printf("\n");
 //        }
     }
 
