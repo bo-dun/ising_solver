@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vector_addition.sw_emu.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0">
+  <platform vendor="xilinx" boardid="aws-vu9p-f1" name="4ddr-xpr-2pr" featureRomTime="0">
+    <version major="4" minor="0"/>
+    <description>Vivado generated DSA</description>
+    <board name="amazon:minotaur-vu9p-f1:1.0" vendor="amazon" fpga="">
+      <interfaces>
+        <interface id="int1" name="PCIe" type="gen3x16"/>
+      </interfaces>
+      <memories>
+        <memory name="mem0" type="ddr4" size="16GB"/>
+        <memory name="mem1" type="ddr4" size="16GB"/>
+        <memory name="mem2" type="ddr4" size="16GB"/>
+        <memory name="mem3" type="ddr4" size="16GB"/>
+      </memories>
+      <images>
+        <image name="" type="HDPI"/>
+        <image name="" type="MDPI"/>
+        <image name="" type="LDPI"/>
+      </images>
+      <id>
+        <vendor>0x1d0f</vendor>
+        <device>0x1042</device>
+        <subsystem>0x0000</subsystem>
+      </id>
+    </board>
+    <build_flow/>
+    <host architecture="x86_64"/>
+    <device name="fpga0" fpgaDevice="virtexuplus:xcvu9p:flgb2104:-2:i" addrWidth="36">
+      <core name="OCL_REGION_0" target="csim" type="clc_region" clockFreq="250MHz" numComputeUnits="16">
+        <kernel name="vector_add" language="clc" vlnv="xilinx.com:hls:vector_add:1.0" hash="UFTBDdVdJu3RGbcP6HT3.." preferredWorkGroupSizeMultiple="0" workGroupSize="1" debug="false">
+          <port name="M_AXI_GMEM" mode="master" range="0xFFFFFFFF" dataWidth="32" portType="addressable" base="0x0"/>
+          <port name="S_AXI_CONTROL" mode="slave" range="0x1000" dataWidth="32" portType="addressable" base="0x0"/>
+          <arg name="printf_buffer" addressQualifier="0" id="" port="S_AXI_CONTROL" size="0x8" offset="0x10" hostOffset="0x0" hostSize="0x8" type="uint" origUse="function"/>
+          <arg name="c" addressQualifier="1" id="0" port="M_AXI_GMEM" size="0x8" offset="0x1C" hostOffset="0x0" hostSize="0x8" type="int*"/>
+          <arg name="a" addressQualifier="1" id="1" port="M_AXI_GMEM" size="0x8" offset="0x28" hostOffset="0x0" hostSize="0x8" type="int*"/>
+          <arg name="b" addressQualifier="1" id="2" port="M_AXI_GMEM" size="0x8" offset="0x34" hostOffset="0x0" hostSize="0x8" type="int*"/>
+          <arg name="dimension" addressQualifier="0" id="3" port="S_AXI_CONTROL" size="0x4" offset="0x40" hostOffset="0x0" hostSize="0x4" type="int"/>
+          <arg name="iterations" addressQualifier="0" id="4" port="S_AXI_CONTROL" size="0x4" offset="0x48" hostOffset="0x0" hostSize="0x4" type="int"/>
+          <compileWorkGroupSize x="1" y="1" z="1"/>
+          <maxWorkGroupSize x="0" y="0" z="0"/>
+          <string_table>
+            <format_string id="1" value="ITERATIONS: %d
+"/>
+            <format_string id="2" value="DIMENSION: %d
+"/>
+          </string_table>
+          <instance name="vector_add_1">
+            <addrRemap base="0x00000000" port="S_AXI_CONTROL"/>
+          </instance>
+        </kernel>
+        <connection srcType="kernel" srcInst="vector_add_1" srcPort="M_AXI_GMEM" dstType="core" dstInst="OCL_REGION_0" dstPort="M00_AXI"/>
+        <connection srcType="core" srcInst="OCL_REGION_0" srcPort="S_AXI" dstType="kernel" dstInst="vector_add_1" dstPort="S_AXI_CONTROL"/>
+      </core>
+    </device>
+  </platform>
+</project>
