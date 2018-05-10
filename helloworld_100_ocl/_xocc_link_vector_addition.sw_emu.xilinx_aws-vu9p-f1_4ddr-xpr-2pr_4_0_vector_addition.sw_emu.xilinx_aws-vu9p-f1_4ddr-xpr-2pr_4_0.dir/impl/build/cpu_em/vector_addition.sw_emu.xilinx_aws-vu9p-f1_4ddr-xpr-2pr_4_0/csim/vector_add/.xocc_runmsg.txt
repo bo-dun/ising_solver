@@ -1,0 +1,2 @@
+running HLS transform to generate intermediate files for kernel: vector_add
+Log file:/home/centos/src/project_data/aws-fpga/SDAccel/examples/xilinx/getting_started/host/helloworld_ocl/_xocc_link_vector_addition.sw_emu.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0_vector_addition.sw_emu.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0.dir/impl/build/cpu_em/vector_addition.sw_emu.xilinx_aws-vu9p-f1_4ddr-xpr-2pr_4_0/csim/vector_add/vector_add_hls_transform.log
