@@ -46,6 +46,7 @@ void vector_add(global int* c,
 
     int vec_in[BUFFER_SIZE];
     int mat_in[BUFFER_SIZE * BUFFER_SIZE];
+    #pragma HLS RESOURCE variable=mat_in core=XPM_MEMORY memory_style=uram
     int vec_out[BUFFER_SIZE];
     
     readA: for (int j = 0 ; j < dimension ; j++) vec_in[j] = a[j];
