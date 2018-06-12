@@ -34,17 +34,10 @@ Description:
     This is vector addition example to demonstrate how HLS optimizations are used in kernel. 
 *******************************************************************************/
 
+#include <cstdio>
 
-#define DIMENSION 1000
+#define DIMENSION 3000
 
-/*
-    Vector Addition Kernel Implementation 
-    Arguments:
-        in1   (input)     --> Input Vector1
-        in2   (input)     --> Input Vector2
-        out   (output)    --> Output Vector
-        size  (input)     --> Size of Vector in Integer
-   */
 extern "C" {
 void vadd(
         const unsigned int *in_vec, // Read-Only Vector
@@ -62,13 +55,14 @@ void vadd(
 // accessing global memory through this interface.
 // Multiple interfaces can also be created based on the requirements. For example when multiple memory accessing arguments need access to
 // global memory simultaneously, user can create multiple master interfaces and can connect to different arguments.
-#pragma HLS INTERFACE m_axi port=in1  offset=slave bundle=gmem
-#pragma HLS INTERFACE m_axi port=in2  offset=slave bundle=gmem
-#pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem
-#pragma HLS INTERFACE s_axilite port=in1  bundle=control
-#pragma HLS INTERFACE s_axilite port=in2  bundle=control
-#pragma HLS INTERFACE s_axilite port=out bundle=control
-#pragma HLS INTERFACE s_axilite port=size bundle=control
+#pragma HLS INTERFACE m_axi port=in_vec  offset=slave bundle=gmem
+#pragma HLS INTERFACE m_axi port=in_mat  offset=slave bundle=gmem
+#pragma HLS INTERFACE m_axi port=out_vec offset=slave bundle=gmem
+#pragma HLS INTERFACE s_axilite port=in_vec  bundle=control
+#pragma HLS INTERFACE s_axilite port=in_mat  bundle=control
+#pragma HLS INTERFACE s_axilite port=out_vec bundle=control
+#pragma HLS INTERFACE s_axilite port=dims bundle=control
+#pragma HLS INTERFACE s_axilite port=iterations bundle=control
 #pragma HLS INTERFACE s_axilite port=return bundle=control
 
     printf("DIMENSION: %d\n", dims);

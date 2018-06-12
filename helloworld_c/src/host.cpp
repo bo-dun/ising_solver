@@ -30,7 +30,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "xcl2.hpp"
 #include <vector>
 
-#define DIMENSION 1000
+#define DIMENSION 3000
 
 int main(int argc, char** argv)
 {
