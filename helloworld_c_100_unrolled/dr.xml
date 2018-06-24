@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<xd:component xd:vendor="xilinx.com" xd:library="xd" xd:name="dr" xd:version="1.00" xd:type="design" xmlns:xd="http://www.xilinx.com/xd">
+  <xd:repository>
+    <xd:file xd:name="xd_ip_db.xml"/>
+  </xd:repository>
+  <xd:instance xd:name="xilinx_aws-vu9p-f1_dynamic_5_0" xd:componentRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+  <xd:instance xd:name="vadd_1" xd:componentRef="vadd"/>
+  <xd:connection>
+    <xd:busInterface xd:name="interconnect_axilite_user_M02_AXI" xd:instanceRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+    <xd:busInterface xd:name="s_axi_control" xd:instanceRef="vadd_1"/>
+  </xd:connection>
+  <xd:connection>
+    <xd:busInterface xd:name="m_axi_gmem" xd:instanceRef="vadd_1"/>
+    <xd:busInterface xd:name="HIP_DDR4_MEM00" xd:instanceRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+  </xd:connection>
+  <xd:connection>
+    <xd:port xd:name="_bd_top_clk_extra_b0" xd:instanceRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+    <xd:port xd:name="interconnect_axilite_user_M02_ACLK" xd:instanceRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+    <xd:port xd:name="ap_clk" xd:instanceRef="vadd_1"/>
+  </xd:connection>
+  <xd:connection>
+    <xd:port xd:name="reset_controllers/clk_extra_b0_250Mhz_reset_interconnect_aresetn" xd:instanceRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+    <xd:port xd:name="interconnect_axilite_user_M02_ARESETN" xd:instanceRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+  </xd:connection>
+  <xd:connection>
+    <xd:port xd:name="reset_controllers/clk_extra_b0_250Mhz_reset_peripheral_aresetn" xd:instanceRef="xilinx_aws-vu9p-f1_dynamic_5_0"/>
+    <xd:port xd:name="ap_rst_n" xd:instanceRef="vadd_1"/>
+  </xd:connection>
+</xd:component>

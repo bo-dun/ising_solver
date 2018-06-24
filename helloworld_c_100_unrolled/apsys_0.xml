@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<cf:model cf:cpu="x86" cf:partition="0" cf:prefix="_p0_" cf:name="dr" xd:type="design" xmlns:xd="http://www.xilinx.com/xd" xmlns:cf="http://www.xilinx.com/connections">
+  <cf:block cf:name="hwblk_vadd">
+    <cf:port cf:name="control" cf:portType="stream" cf:direction="in"/>
+    <cf:port cf:name="in_vec" cf:portType="stream" cf:direction="in"/>
+    <cf:port cf:name="in_mat" cf:portType="stream" cf:direction="in"/>
+    <cf:port cf:name="out_vec" cf:portType="stream" cf:direction="in"/>
+    <cf:port cf:name="dims" cf:portType="stream" cf:direction="in"/>
+    <cf:port cf:name="iterations" cf:portType="stream" cf:direction="in"/>
+  </cf:block>
+  <cf:block cf:name="swblk_vadd">
+    <cf:port cf:name="control" cf:portType="stream" cf:direction="out"/>
+    <cf:port cf:name="in_vec" cf:portType="stream" cf:direction="out"/>
+    <cf:port cf:name="in_mat" cf:portType="stream" cf:direction="out"/>
+    <cf:port cf:name="out_vec" cf:portType="stream" cf:direction="out"/>
+    <cf:port cf:name="dims" cf:portType="stream" cf:direction="out"/>
+    <cf:port cf:name="iterations" cf:portType="stream" cf:direction="out"/>
+  </cf:block>
+  <cf:comp cf:name="xilinx_aws-vu9p-f1_dynamic_5_0" xd:componentRef="xilinx_aws-vu9p-f1_dynamic_5_0" xd:clockId="0"/>
+  <cf:comp cf:name="vadd_1" xd:componentRef="vadd"/>
+  <cf:instance cf:name="hwinst_vadd_1" cf:blockName="hwblk_vadd" cf:compName="vadd_1">
+    <cf:portMap cf:blockPort="control" cf:compPort="s_axi_control" xd:register="0x0"/>
+    <cf:portMap cf:blockPort="in_vec" cf:compPort="m_axi_gmem" cf:ctrlPort="s_axi_control" xd:register="0x10"/>
+    <cf:portMap cf:blockPort="in_mat" cf:compPort="m_axi_gmem" cf:ctrlPort="s_axi_control" xd:register="0x1C"/>
+    <cf:portMap cf:blockPort="out_vec" cf:compPort="m_axi_gmem" cf:ctrlPort="s_axi_control" xd:register="0x28"/>
+    <cf:portMap cf:blockPort="dims" cf:compPort="s_axi_control" xd:register="0x34"/>
+    <cf:portMap cf:blockPort="iterations" cf:compPort="s_axi_control" xd:register="0x3C"/>
+  </cf:instance>
+  <cf:instance cf:name="swinst_vadd_1" cf:blockName="swblk_vadd" cf:compName="xilinx_aws-vu9p-f1_dynamic_5_0">
+    <cf:portMap cf:blockPort="control" cf:compPort="interconnect_axilite_user_M02_AXI"/>
+    <cf:portMap cf:blockPort="in_vec" cf:compPort="HIP_DDR4_MEM00" cf:ctrlPort="interconnect_axilite_user_M02_AXI"/>
+    <cf:portMap cf:blockPort="in_mat" cf:compPort="HIP_DDR4_MEM00" cf:ctrlPort="interconnect_axilite_user_M02_AXI"/>
+    <cf:portMap cf:blockPort="out_vec" cf:compPort="HIP_DDR4_MEM00" cf:ctrlPort="interconnect_axilite_user_M02_AXI"/>
+    <cf:portMap cf:blockPort="dims" cf:compPort="interconnect_axilite_user_M02_AXI"/>
+    <cf:portMap cf:blockPort="iterations" cf:compPort="interconnect_axilite_user_M02_AXI"/>
+  </cf:instance>
+  <cf:connection cf:srcInst="swinst_vadd_1" cf:srcPort="control" cf:dstInst="hwinst_vadd_1" cf:dstPort="control">
+    <cf:dataMover cf:compName="xilinx_aws-vu9p-f1_dynamic_5_0" cf:softwareLib="axi_lite"/>
+  </cf:connection>
+  <cf:connection cf:srcInst="swinst_vadd_1" cf:srcPort="in_vec" cf:dstInst="hwinst_vadd_1" cf:dstPort="in_vec">
+    <cf:dataMover cf:compName="vadd_1" cf:softwareLib="zero_copy"/>
+  </cf:connection>
+  <cf:connection cf:srcInst="swinst_vadd_1" cf:srcPort="in_mat" cf:dstInst="hwinst_vadd_1" cf:dstPort="in_mat">
+    <cf:dataMover cf:compName="vadd_1" cf:softwareLib="zero_copy"/>
+  </cf:connection>
+  <cf:connection cf:srcInst="swinst_vadd_1" cf:srcPort="out_vec" cf:dstInst="hwinst_vadd_1" cf:dstPort="out_vec">
+    <cf:dataMover cf:compName="vadd_1" cf:softwareLib="zero_copy"/>
+  </cf:connection>
+  <cf:connection cf:srcInst="swinst_vadd_1" cf:srcPort="dims" cf:dstInst="hwinst_vadd_1" cf:dstPort="dims">
+    <cf:dataMover cf:compName="xilinx_aws-vu9p-f1_dynamic_5_0" cf:softwareLib="axi_lite"/>
+  </cf:connection>
+  <cf:connection cf:srcInst="swinst_vadd_1" cf:srcPort="iterations" cf:dstInst="hwinst_vadd_1" cf:dstPort="iterations">
+    <cf:dataMover cf:compName="xilinx_aws-vu9p-f1_dynamic_5_0" cf:softwareLib="axi_lite"/>
+  </cf:connection>
+</cf:model>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xd:addressMap xmlns:xd="http://www.xilinx.com/xd">
+  <xd:addressRange xd:componentRef="aws_0" xd:addressSpace="M_AXI_PCIS" xd:segment="SEG_HIP_DDR4_MEM00" xd:slaveRef="HIP" xd:slaveInterface="S00_AXI" xd:slaveSegment="DDR4_MEM00" xd:baseAddr="0x0000000000" xd:range="0x400000000"/>
+  <xd:addressRange xd:componentRef="aws_0" xd:addressSpace="M_AXI_PCIS" xd:segment="SEG_HIP_DDR4_MEM01" xd:slaveRef="HIP" xd:slaveInterface="S00_AXI" xd:slaveSegment="DDR4_MEM01" xd:baseAddr="0x0400000000" xd:range="0x400000000"/>
+  <xd:addressRange xd:componentRef="aws_0" xd:addressSpace="M_AXI_PCIS" xd:segment="SEG_HIP_DDR4_MEM02" xd:slaveRef="HIP" xd:slaveInterface="S00_AXI" xd:slaveSegment="DDR4_MEM02" xd:baseAddr="0x0800000000" xd:range="0x400000000"/>
+  <xd:addressRange xd:componentRef="aws_0" xd:addressSpace="M_AXI_PCIS" xd:segment="SEG_HIP_DDR4_MEM03" xd:slaveRef="HIP" xd:slaveInterface="S00_AXI" xd:slaveSegment="DDR4_MEM03" xd:baseAddr="0x0C00000000" xd:range="0x400000000"/>
+  <xd:addressRange xd:componentRef="aws_0" xd:addressSpace="M_AXI_OCL" xd:segment="SEG_axi_gpio_null_Reg" xd:slaveRef="axi_gpio_null" xd:slaveInterface="S_AXI" xd:slaveSegment="Reg" xd:baseAddr="0x0300000" xd:range="0x100000"/>
+  <xd:addressRange xd:componentRef="aws_0" xd:addressSpace="M_AXI_OCL" xd:segment="SEG_feature_rom_ctrl_Mem0" xd:slaveRef="feature_rom_ctrl" xd:slaveInterface="S_AXI" xd:slaveSegment="Mem0" xd:baseAddr="0x00B0000" xd:range="0x10000"/>
+  <xd:addressRange xd:componentRef="aws_0" xd:addressSpace="M_AXI_OCL" xd:segment="SEG_vadd_1_Reg" xd:slaveRef="vadd_1" xd:slaveInterface="s_axi_control" xd:slaveSegment="Reg" xd:baseAddr="0x0000000" xd:range="0x10000"/>
+  <xd:addressRange xd:componentRef="vadd_1" xd:addressSpace="Data_m_axi_gmem" xd:segment="SEG_HIP_DDR4_MEM00" xd:slaveRef="HIP" xd:slaveInterface="S01_AXI" xd:slaveSegment="DDR4_MEM00" xd:baseAddr="0x0000000000000000" xd:range="0x400000000"/>
+</xd:addressMap>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root VersionMajor="1" VersionMinor="9">
+  <GenAppInfo Name="Vivado" Version="2017.4" CL="2099217" TimeStamp="Thu Jan 11 19:12:15 2018"/>
+  <DSA Vendor="xilinx" BoardId="aws-vu9p-f1" Name="dynamic" VersionMajor="5" VersionMinor="0" Description="Vivado generated DSA" FeatureRomTimestamp="0" DcpLogicFunctionStripped="false" DcpEncrypt="false" Unified="true" Fixed="false">
+    <Host Architecture="x86_64" Interface="pcie"/>
+    <Build UsesPR="true" PlatformState="impl" AcceleratorBinaryContent="dcp">
+      <XoccLinkSwitches>
+        <XoccLinkSwitch Name="xp" Value="param:compiler.lockFlowCritSlackThreshold=0"/>
+        <XoccLinkSwitch Name="xp" Value="vivado_param:bd.disablePrefixForFaasIntf=1"/>
+        <XoccLinkSwitch Name="xp" Value="vivado_param:hd.routingContainmentAreaExpansion=true"/>
+        <XoccLinkSwitch Name="xp" Value="vivado_param:hd.supportClockNetCrossDiffReconfigurablePartitions=1"/>
+        <XoccLinkSwitch Name="xp" Value="vivado_param:bitstream.enablePR=4123"/>
+      </XoccLinkSwitches>
+    </Build>
+    <Board Name="amazon:minotaur-vu9p-f1:1.0" Vendor="amazon" Part="">
+      <Interfaces>
+        <Interface Id="int1" Name="PCIe" Type="gen3x16"/>
+      </Interfaces>
+      <Memories>
+        <Memory Name="mem0" Type="ddr4" Size="16GB"/>
+        <Memory Name="mem1" Type="ddr4" Size="16GB"/>
+        <Memory Name="mem2" Type="ddr4" Size="16GB"/>
+        <Memory Name="mem3" Type="ddr4" Size="16GB"/>
+      </Memories>
+      <Images>
+        <Img Type="HDPI" File=""/>
+        <Img Type="MDPI" File=""/>
+        <Img Type="LDPI" File=""/>
+      </Images>
+      <PCIeId Vendor="0x1d0f" Device="0x1042" Subsystem="0x0000" FeatureId="0x0000000000000000"/>
+    </Board>
+    <Devices>
+      <Device Name="fpga0" Type="8" FpgaDevice="virtexuplus:xcvu9p:flgb2104:-2:i">
+        <SystemClocks>
+          <SystemClock Name="clk_main_a0" Frequency="250000000"/>
+        </SystemClocks>
+        <Core Name="OCL_REGION_0" Type="clc_region" ComputeUnits="60" InstancePath="CL" DRBaseAddress="0">
+          <AvailableResources LUT="1046066" REG="2194049" BRAM="1891" DSP="6837"/>
+        </Core>
+      </Device>
+    </Devices>
+    <Files>
+      <File Type="EMU_XML" Name="emu/emu.xml"/>
+      <File Type="POST_OPT_TCL" Name="tcl_hooks/post_opt.tcl"/>
+      <File Type="PRE_SYS_LINK_TCL" Name="tcl_hooks/dynamic_prelink.tcl"/>
+      <File Type="SYNTH_CONSTRS" Name="tcl_hooks/slr_floorplan.xdc" UsedIn="implementation" ProcessingOrder="NORMAL"/>
+      <File Type="SYNTH_CONSTRS" Name="tcl_hooks/cl_synth_aws.xdc" UsedIn="synthesis implementation" ProcessingOrder="LATE"/>
+      <File Type="SYNTH_CONSTRS" Name="tcl_hooks/cl_clocks_aws.xdc" UsedIn="out_of_context synthesis implementation" ProcessingOrder="EARLY"/>
+      <File Type="SYNTH_CONSTRS" Name="tcl_hooks/cl_ddr.xdc" UsedIn="synthesis implementation" ProcessingOrder="LATE"/>
+      <File Type="IMPL_CONSTRS" Name="tcl_hooks/slr_floorplan_parent_assignment.xdc" UsedIn="implementation" ProcessingOrder="LATE"/>
+      <File Type="DCP" Name="xilinx_aws-vu9p-f1_dynamic_5_0.dcp"/>
+      <File Type="BB_LOCKED_IMPL_DCP" Name="xilinx_aws-vu9p-f1_dynamic_5_0_bb_locked.dcp"/>
+      <File Type="HPFM" Name="xilinx_aws-vu9p-f1_dynamic_5_0.hpfm"/>
+      <File Type="DR_BD" Name="bd/pfm_dynamic.bd"/>
+      <File Type="IP_REPO_PATH" Name="iprepo"/>
+      <File Type="IP_CACHE_DIR" Name="ipcache"/>
+    </Files>
+  </DSA>
+</Root>
