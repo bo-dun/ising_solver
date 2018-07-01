@@ -76,13 +76,17 @@ void vadd(
     {
         for (int j = 0; j < dims; j++) vec_out[j] = 0;
 	for (int chunk_iter = 0; chunk_iter < DIMENSION / CHUNK_SIZE; chunk_iter++) {
-            for (int read = 0; read < DIMENSION * CHUNK_SIZE; read++) {
-                mat_chunk[read] = in_mat[read + DIMENSION * CHUNK_SIZE * chunk_iter];
+            for (int along_dim = 0; along_dim < DIMENSION; read++) {
+                for (int along_chunk = 0; along_chunk < CHUNK_SIZE; along_chunk++) {
+                    mat_chunk[along_dim * CHUNK_SIZE + along_chunk] = in_mat[along_dim * DIMENSION + chunk_iter * CHUNK_SIZE + along_chunk];
+                }
             }
-	    for (int j = 0; j < CHUNK_SIZE; j++)
+	    for (int j = 0; j < DIMENSION; j++)
 	    {
-	        #pragma HLS UNROLL factor=1000
-	        for (int k = 0; k < dims; k++) vec_out[chunk_iter * CHUNK_SIZE + j] += vec_in[k] * mat_chunk[j * dims + k];
+                #pragma HLS UNROLL factor=1000
+	        for (int k = 0; k < CHUNK_SIZE; k++) {
+	            vec_out[j] += vec_in[k + chunk_iter * CHUNK_SIZE] * mat_chunk[j * CHUNK_SIZE + k];
+                }
 	    }
         }
         for (int j = 0; j < dims; j++) vec_in[j] = vec_out[j];
