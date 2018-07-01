@@ -76,7 +76,7 @@ void vadd(
     {
         for (int j = 0; j < dims; j++) vec_out[j] = 0;
 	for (int chunk_iter = 0; chunk_iter < DIMENSION / CHUNK_SIZE; chunk_iter++) {
-            for (int along_dim = 0; along_dim < DIMENSION; read++) {
+            for (int along_dim = 0; along_dim < DIMENSION; along_dim++) {
                 for (int along_chunk = 0; along_chunk < CHUNK_SIZE; along_chunk++) {
                     mat_chunk[along_dim * CHUNK_SIZE + along_chunk] = in_mat[along_dim * DIMENSION + chunk_iter * CHUNK_SIZE + along_chunk];
                 }
