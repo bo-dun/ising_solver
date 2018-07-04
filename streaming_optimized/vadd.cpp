@@ -34,10 +34,18 @@ Description:
     This is vector addition example to demonstrate how HLS optimizations are used in kernel. 
 *******************************************************************************/
 
-#define DIMENSION 1000
+#define DIMENSION 100
 #define CHUNK_SIZE 25
-
+#define CHUNK_ITERATIONS 4 // DIMENSION / CHUNK_SIZE
+#define ELEMS_IN_CHUNK 2500 // DIMENSION * CHUNK_SIZE
 extern "C" {
+void chunk_op(unsigned int *vec_out, unsigned int *vec_in, unsigned int *mat_chunk, int chunk_iter, int dims) {
+    for (int j = 0; j < dims; j++) {
+        #pragma HLS UNROLL factor=100
+        for (int k = 0; k < CHUNK_SIZE; k++) vec_out[j] += vec_in[k + chunk_iter * CHUNK_SIZE] * mat_chunk[j * CHUNK_SIZE + k];
+    }
+}
+
 void vadd(
         const unsigned int *in_vec, // Read-Only Vector
         const unsigned int *in_mat, // Read-Only Matrix
@@ -75,19 +83,15 @@ void vadd(
     for (int i = 0; i < iterations;  i ++)
     {
         for (int j = 0; j < dims; j++) vec_out[j] = 0;
-	for (int chunk_iter = 0; chunk_iter < DIMENSION / CHUNK_SIZE; chunk_iter++) {
-            for (int along_dim = 0; along_dim < DIMENSION; along_dim++) {
-                for (int along_chunk = 0; along_chunk < CHUNK_SIZE; along_chunk++) {
-                    mat_chunk[along_dim * CHUNK_SIZE + along_chunk] = in_mat[along_dim * DIMENSION + chunk_iter * CHUNK_SIZE + along_chunk];
-                }
+	for (int chunk_iter = 0; chunk_iter < CHUNK_ITERATIONS; chunk_iter++) {
+            for (int along_dim = 0; along_dim < ELEMS_IN_CHUNK; along_dim++) {
+                mat_chunk[along_dim] = in_mat[along_dim + chunk_iter * ELEMS_IN_CHUNK];
             }
-	    for (int j = 0; j < DIMENSION; j++)
-	    {
-                #pragma HLS UNROLL factor=1000
-	        for (int k = 0; k < CHUNK_SIZE; k++) {
-	            vec_out[j] += vec_in[k + chunk_iter * CHUNK_SIZE] * mat_chunk[j * CHUNK_SIZE + k];
-                }
-	    }
+	    chunk_op(vec_out, vec_in, mat_chunk, chunk_iter, dims);
+            //for (int j = 0; j < dims; j++) {
+            //    #pragma HLS UNROLL factor=100
+            //    for (int k = 0; k < CHUNK_SIZE; k++) vec_out[j] += vec_in[k + chunk_iter * CHUNK_SIZE] * mat_chunk[j * CHUNK_SIZE + k];
+            //}
         }
         for (int j = 0; j < dims; j++) vec_in[j] = vec_out[j];
     }
